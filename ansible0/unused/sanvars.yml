@@ -1,0 +1,14 @@
+netapp_hostname: 192.168.0.101
+netapp_username: admin
+netapp_password: Netapp1!
+vserver: san_svm
+volname: san_vol
+initiator: iqn.1991-05.com.microsoft:jumphost.demo.netapp.com
+lun_name: lun1
+igroup_name: igroup1
+igroups:
+  - { name: igroup1, vserver: san_svm, group_type: iscsi, ostype: windows, initiator: 
+“iqn.1991-05.com.microsoft:jumphost.demo.netapp.com” } # the quotes for iqn/wwpn are necessary because of the : in them.
+luns:
+ - { name: lun1, volname: san_vol, vserver: san_vserver, size: 10, ostype: linux, 
+space_reserve: false, igroup: igroup1 }

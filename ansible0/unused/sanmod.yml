@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    input: &input
+      hostname: "{{ PRI_CLU }}"
+      username: "{{ PRI_CLU_USER }}"
+      password: "{{ PRI_CLU_PASS }}"
+    file: globals.yml
+  tasks:
+  - import_role:
+      name: /root/.ansible/collections/ansible_collections/netapp/ontap/roles/na_ontap_san_create
+    vars:
+      <<: *input
+    when: luns != None
