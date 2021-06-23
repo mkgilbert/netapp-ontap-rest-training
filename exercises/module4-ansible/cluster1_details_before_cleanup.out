@@ -1,0 +1,50 @@
+# This is what the cluster looked like before running exercise Module 4, Task 3-3
+
+Last login time: 6/22/2021 23:08:26
+
+
+  (network interface show)
+            Logical    Status     Network            Current       Current Is
+Vserver     Interface  Admin/Oper Address/Mask       Node          Port    Home
+----------- ---------- ---------- ------------------ ------------- ------- ----
+Cluster
+            cluster1-01_clus1 up/up 169.254.1.1/16   cluster1-01   e0a     true
+            cluster1-01_clus2 up/up 169.254.1.2/16   cluster1-01   e0b     true
+            cluster1-02_clus1 up/up 169.254.2.1/16   cluster1-02   e0a     true
+            cluster1-02_clus2 up/up 169.254.2.2/16   cluster1-02   e0b     true
+cluster1
+            cluster1-01_mgmt1 up/up 192.168.0.111/24 cluster1-01   e0c     true
+            cluster1-02_mgmt1 up/up 192.168.0.112/24 cluster1-02   e0c     true
+            cluster_mgmt up/up    192.168.0.101/24   cluster1-01   e0d     true
+7 entries were displayed.
+
+                               Admin      Operational Root
+Vserver     Type    Subtype    State      State       Volume     Aggregate
+----------- ------- ---------- ---------- ----------- ---------- ----------
+cluster1    admin   -          -          -           -          -
+cluster1-01 node    -          -          -           -          -
+cluster1-02 node    -          -          -           -          -
+svm1        data    default    running    running     svm1_root  aggr1
+4 entries were displayed.
+
+Vserver   Volume       Aggregate    State      Type       Size  Available Used%
+--------- ------------ ------------ ---------- ---- ---------- ---------- -----
+cluster1-01 vol0       aggr0_cluster1_01 online RW         6GB     4.79GB   20%
+cluster1-02 vol0       aggr0_cluster1_02 online RW         6GB     4.76GB   20%
+svm1      svm1_root    aggr1        online     RW         20MB    18.64MB    1%
+svm1      vol1         aggr1        online     RW         10GB     9.50GB    0%
+4 entries were displayed.
+
+                                                                      
+
+
+Aggregate     Size Available Used% State   #Vols  Nodes            RAID Status
+--------- -------- --------- ----- ------- ------ ---------------- ------------
+aggr0_cluster1_01 6.68GB 661.4MB 90% online     1 cluster1-01      raid_dp,
+                                                                   normal
+aggr0_cluster1_02 6.68GB 661.4MB 90% online     1 cluster1-02      raid_dp,
+                                                                   normal
+aggr1      10.55GB   482.6MB   96% online       2 cluster1-01      raid_dp,
+                                                                   normal
+3 entries were displayed.
+

@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  gather_facts: false
+  name: Module 6 Tasks 1-1 through 1-4
+  vars:
+    login: &login
+      hostname: 192.168.0.101
+      username: admin
+      password: Netapp1!
+      https: true
+      validate_certs: false
+  tasks:
+    - name: Create aggregate
+      na_ontap_aggregate:
+        state: present
+        service_state: online
+        nodes: cluster1-01
+        name: aggr1_cluster1_01_data
+        disk_count: 13
+        wait_for_online: true
+        time_out: 300
+        <<: *login
+    - name: Create vserver
+      na_ontap_svm:
+        state: present
+        name: nas_svm
+        root_volume: nas_svm_root
+        root_volume_aggregate: aggr1_cluster1_01_data
+        aggr_list: aggr1_cluster1_01_data
+        <<: *login
+    - name: Create volume
+      na_ontap_volume:
+        state: present
+        name: nas_svm_nfs_01
+        vserver: nas_svm
+        aggregate_name: aggr1_cluster1_01_data
+        size: 1
+        size_unit: gb
+        policy: default
+        junction_path: "/nfs1"
+        space_guarantee: none
+        wait_for_completion: true
+        <<: *login

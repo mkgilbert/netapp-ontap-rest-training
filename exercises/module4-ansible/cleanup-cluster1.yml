@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  gather_facts: false
+  name: NetApp Cluster1 Cleanup
+  vars:
+    login: &login
+     hostname: 192.168.0.101 # NetApp Cluster IP
+     username: admin # Cluster User
+     password: Netapp1! # Cluster Password
+     https: true
+     validate_certs: false
+    clustername: cluster1 # Cluster Name
+    vols:
+    - vol1
+    lif:
+    - name: svm21_cifs_nfs_lif1
+      vserver: svm21
+    - name: cluster2-01_iscsi_lif_1
+      vserver : svm21
+    - name: intercluster1
+      vserver : cluster2  
+  tasks:
+  - name: Delete vols
+    na_ontap_volume:
+      state: absent
+      name: "{{ item }}"
+      vserver: "svm1"
+      wait_for_completion: true
+      <<: *login
+    loop: "{{ vols }}"
+  - name: Delete Vserver svm1
+    na_ontap_svm:
+      state: absent
+      name: "svm1"
+      <<: *login
+  - name: Delete Data Aggregate
+    na_ontap_aggregate:
+      state: absent
+      service_state: online
+      name: "aggr1"
+      <<: *login
